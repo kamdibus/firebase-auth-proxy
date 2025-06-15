@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import JSONResponse
 
@@ -42,14 +44,15 @@ class AuthRouter:
 
             # Set response headers for Traefik ForwardAuth
             # These headers will be added by Traefik to the original request before forwarding to backend
+            # HTTP headers must contain only ASCII characters, so we URL-encode Unicode characters
             response_headers = {
-                'X-User-Email': auth_response.user_email,
-                'X-User-Name': auth_response.user_name,
+                'X-User-Email': quote(auth_response.user_email, safe='@.'),
+                'X-User-Name': quote(auth_response.user_name),
                 'X-Firebase-UID': auth_response.firebase_uid,
                 'X-User-Role': auth_response.role,
                 'X-User-Permissions': ','.join(auth_response.permissions),
-                'X-User-First-Name': auth_response.first_name,
-                'X-User-Last-Name': auth_response.last_name,
+                'X-User-First-Name': quote(auth_response.first_name),
+                'X-User-Last-Name': quote(auth_response.last_name),
                 'X-User-Email-Verified': str(auth_response.email_verified).lower(),
             }
 
