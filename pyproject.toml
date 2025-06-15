@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "primalab-firebase-auth"
+version = "0.1.0"
+description = "Firebase authentication proxy service for PrimaLab"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.103.0",
+    "uvicorn>=0.23.2",
+    "pydantic>=2.4.0",
+    "pydantic-settings>=2.0.0",
+    "firebase-admin>=6.2.0",
+    "loguru>=0.7.0",
+]
+
+[project.scripts]
+firebase-auth = "src.firebase_auth.main:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.21.0",
+    "respx>=0.20.1",
+    "ruff>=0.9.5"
+]
+
+[tool.ruff]
+line-length = 130
+fix = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["firebase_auth"]
+sections = { FUTURE = [], STDLIB = [], THIRDPARTY = [], FIRSTPARTY = [], LOCALFOLDER = [] }
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+docstring-code-format = true
+
+[tool.pytest]
+testpaths = ["tests"]
+asyncio_mode = "strict"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
