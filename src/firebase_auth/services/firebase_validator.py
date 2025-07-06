@@ -76,7 +76,7 @@ class FirebaseTokenValidator:
             picture = decoded_token.get('picture')
             email_verified = decoded_token.get('email_verified', False)
 
-            self.logger.info(f'Successfully validated Firebase token for user: {email} with role: {role}')
+            self.logger.debug(f'Successfully validated Firebase token for user: {email} with role: {role}')
 
             return {
                 'firebase_uid': firebase_uid,

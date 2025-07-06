@@ -20,7 +20,7 @@ class SimpleAuthService:
         picture: Optional[str] = None,
         email_verified: bool = False,
     ) -> AuthValidationResponse:
-        self.logger.info(f'Creating auth response for user: {email} with role: {role}')
+        self.logger.debug(f'Creating auth response for user: {email} with role: {role}')
 
         return AuthValidationResponse(
             user_email=email,

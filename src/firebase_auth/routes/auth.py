@@ -33,7 +33,7 @@ class AuthRouter:
             # Extract Authorization header from the forwarded request
             authorization = request.headers.get('Authorization', '')
 
-            self.logger.info(f'Received ForwardAuth request from Traefik. Method: {request.method}, URL: {request.url}')
+            self.logger.debug(f'Received ForwardAuth request from Traefik. Method: {request.method}, URL: {request.url}')
             self.logger.debug(
                 f'Authorization header: {authorization[:50]}...'
                 if len(authorization) > 50
@@ -64,7 +64,7 @@ class AuthRouter:
                 headers=response_headers,
             )
 
-            self.logger.info(f'Successfully authenticated user: {auth_response.user_email} with role: {auth_response.role}')
+            self.logger.debug(f'Successfully authenticated user: {auth_response.user_email} with role: {auth_response.role}')
             return response
 
         except AuthError as e:

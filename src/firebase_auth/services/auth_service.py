@@ -35,7 +35,7 @@ class AuthService:
             email_verified=firebase_data['email_verified'],
         )
 
-        self.logger.info(f'Successfully validated token for user: {auth_response.user_email} with role: {auth_response.role}')
+        self.logger.debug(f'Successfully validated token for user: {auth_response.user_email} with role: {auth_response.role}')
         return auth_response
 
 
